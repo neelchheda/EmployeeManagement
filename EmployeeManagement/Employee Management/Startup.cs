@@ -2,6 +2,7 @@ using Employee_Management.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,9 @@ namespace Employee_Management {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>();
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             services.AddMvc(options => options.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddScoped<iEmployeeRepository,SQLEmployeeRepository>();
@@ -41,6 +45,7 @@ namespace Employee_Management {
                 app.UseStatusCodePagesWithRedirects("/Error/{0}"); 
             }
             app.UseStaticFiles();
+            app.UseAuthentication();
             //app.usemvcwithdefaultroute();
             app.UseMvc(routes =>
             {
