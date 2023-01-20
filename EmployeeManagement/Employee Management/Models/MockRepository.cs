@@ -23,9 +23,6 @@ namespace Employee_Management.Models {
             _employeeList.Add(employee);
             return employee;
         }
-
-
-
         public IEnumerable<Employee> GetAllEmployee()
         {
             return _employeeList;
