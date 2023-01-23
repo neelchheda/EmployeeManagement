@@ -1,8 +1,10 @@
 ﻿using Employee_Management.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Employee_Management.Controllers {
@@ -32,9 +34,24 @@ namespace Employee_Management.Controllers {
         {
             return View("Register");
         }
+
+        [AcceptVerbs("Get","Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Json(true);
+            } else
+            {
+                return Json($"Email : {email} is already in use.");
+            }
+
+        }
+
         [HttpPost]
         [AllowAnonymous]
-
         public async Task <IActionResult> Register(RegisterUserViewModel model)
         {
             if(ModelState.IsValid) 
@@ -73,7 +90,7 @@ namespace Employee_Management.Controllers {
 
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
                     {
                         return Redirect(ReturnUrl);
                     } else
