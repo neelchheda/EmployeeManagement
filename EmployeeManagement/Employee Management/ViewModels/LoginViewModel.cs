@@ -8,7 +8,6 @@ namespace Employee_Management.ViewModels {
     {
         [Required]
         [EmailAddress]
-        [Remote(action: "IsEmailCorrect", controller: "Account")]
 
         public string Email { get; set; }
         [Required]
