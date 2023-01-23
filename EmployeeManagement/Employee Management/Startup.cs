@@ -1,3 +1,4 @@
+using employee_management.models;
 using Employee_Management.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

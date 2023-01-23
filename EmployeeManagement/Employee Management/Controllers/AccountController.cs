@@ -1,4 +1,6 @@
-﻿using Employee_Management.ViewModels;
+﻿using employee_management.models;
+using Employee_Management.Models;
+using Employee_Management.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -46,6 +48,20 @@ namespace Employee_Management.Controllers {
             } else
             {
                 return Json($"Email : {email} is already in use.");
+            }
+
+        }
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailCorrect(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Json(true);
+            } else
+            {
+                return Json($"The email {email} does not exist");
             }
 
         }
