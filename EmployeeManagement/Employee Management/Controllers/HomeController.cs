@@ -1,5 +1,6 @@
 ﻿using Employee_Management.Models;
 using Employee_Management.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Reflection;
 
 namespace Employee_Management.Controllers {
+    [Authorize]
     public class HomeController : Controller {
         private readonly iEmployeeRepository _employeerepository;
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -18,14 +20,14 @@ namespace Employee_Management.Controllers {
             _employeerepository = employeeRepository;
             this.webHostEnvironment = webHostEnvironment;
         }
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var model = _employeerepository.GetAllEmployee();
             return View(model);
         }
-        //[HttpPost]
-        //[Consumes("application/xml")]
 
+        [AllowAnonymous]
         public ViewResult Details(int? Id)
         {
             //throw new Exception("Error in detail View");
@@ -45,12 +47,14 @@ namespace Employee_Management.Controllers {
         }
 
         [HttpGet]
+        
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpGet]
+
         public ViewResult Edit(int id)
         {
             Employee employee = _employeerepository.GetEmployee(id);
@@ -65,6 +69,7 @@ namespace Employee_Management.Controllers {
             return View(employeeEditViewModel);
         }
         [HttpPost]
+
         public IActionResult Edit(EmployeeEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -89,6 +94,7 @@ namespace Employee_Management.Controllers {
         }
 
         [HttpPost]
+
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid)

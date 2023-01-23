@@ -23,8 +23,10 @@
 </div>*@
 
 
-<div class="card align-self-center mx-auto">
-    <img src=@Photopath class="card-img-top" alt="..." asp-append-version="true">
+<div class="card align-self-center ">
+    <div style="width: 100px">
+        <img src=@Photopath class="card-img-top imageThumbnail" alt="..." asp-append-version="true">
+    </div>
     <div class="card-body">
         <h5 class="card-title">@Model.Employee.Name</h5>
         <p class="card-text">Department : @Model.Employee.Department</p>

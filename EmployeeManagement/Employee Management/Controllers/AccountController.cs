@@ -1,5 +1,6 @@
 ﻿using Employee_Management.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -25,11 +26,15 @@ namespace Employee_Management.Controllers {
 
 
         [HttpGet]
+        [AllowAnonymous]
+
         public IActionResult Register()
         {
             return View("Register");
         }
         [HttpPost]
+        [AllowAnonymous]
+
         public async Task <IActionResult> Register(RegisterUserViewModel model)
         {
             if(ModelState.IsValid) 
@@ -52,12 +57,14 @@ namespace Employee_Management.Controllers {
             return View(model);
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +73,14 @@ namespace Employee_Management.Controllers {
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    } else
+                    {
                     return RedirectToAction("index", "home");
+
+                    }
                 } else { 
                
                     ModelState.AddModelError(string.Empty, "Invalid Login Credentials");
