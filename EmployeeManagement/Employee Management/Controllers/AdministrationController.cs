@@ -23,6 +23,27 @@ namespace Employee_Management.Controllers {
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id {id} caanot be found";
+                return View("NotFound");
+            }
+            
+            
+        }
+
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();

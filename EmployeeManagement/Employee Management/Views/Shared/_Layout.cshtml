@@ -7,7 +7,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <environment include="Development">
-        
+
         <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="~/lib/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet" />
         <link href="~/lib/bootstrap/css/bootstrap.rtl.css" rel="stylesheet" />
@@ -49,7 +49,6 @@
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 <img src="~/images/rite_logo.png" height="45" width="45" />
-
             </a>
             <button type="button" class="navbar-toggler navbar-light" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -62,7 +61,15 @@
                     <li class="nav-item">
                         <a asp-controller="Home" asp-action="Create" class="nav-link">Create</a>
                     </li>
-
+                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                        <li class="nav-item">
+                            <a asp-controller="Administration" asp-action="ListUsers" class="nav-link">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Administration" asp-action="ListRoles" class="nav-link">Roles</a>
+                        </li>
+                        }
                 </ul>
                 <ul class="navbar-nav">
                     @if (signInManager.IsSignedIn(User))
@@ -77,10 +84,10 @@
                     } else
                     {
                         <li class="nav-item">
-                            <a asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
+                            <a asp-controller="Account" asp-action="Register" class="nav-link py-0">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Account" asp-action="login" class="nav-link">Login</a>
+                            <a asp-controller="Account" asp-action="login" class="nav-link py-0">Login</a>
                         </li>
                     }
                 </ul>
@@ -97,3 +104,6 @@
     </div>
 </body>
 </html>
+
+
+
