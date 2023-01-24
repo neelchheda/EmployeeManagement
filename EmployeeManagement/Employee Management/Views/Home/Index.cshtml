@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Employee>
 @{
-    Layout="~/Views/SHared/_Layout.cshtml";
-    ViewBag.Title = "Employee List"; 
+    Layout = "~/Views/SHared/_Layout.cshtml";
+    ViewBag.Title = "Employee List";
 
 }
 @*<div class="card-deck">
@@ -25,28 +25,20 @@
 <br />
 
 <div class="card-deck row row-cols-1 row-cols-md-3">
-@foreach (var employee in Model)
+    @foreach (var employee in Model)
     {
-        var Photopath = "~/../../images/" + employee.PhotoPath ?? "~/../../images/image_contact.png"
-
-        ;
-
+        var Photopath = "~/../../images/" + employee.PhotoPath ?? "~/../../images/image_contact.png";
         <div class="card mx-auto justify-content-center align-content-center" style="width: 18rem;">
-    
-            <img src=@Photopath class="card-img-top "  style="width:auto ; height:auto">
+            <img src=@Photopath class="card-img-top " style="width:auto ; height:auto">
             <div class="col mb-4">
-            <div class="card-body">
-                <h5 class="card-title">@employee.Name</h5>
-                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                *@
-                 <a asp-controller="Home" asp-action="details" asp-route-id="@employee.Id" class="btn btn-primary m-1">View</a>
+                <div class="card-body">
+                    <h5 class="card-title">@employee.Name</h5>
+                    <a asp-controller="Home" asp-action="details" asp-route-id="@employee.Id" class="btn btn-primary m-1">View</a>
                     <a asp-controller="Home" asp-action="edit" asp-route-id="@employee.Id" class="btn btn-success m-1">Edit</a>
-                <a href="#" class="btn btn-danger m-1">Delete</a>
-            </div>
+                    <a href="#" class="btn btn-danger m-1">Delete</a>
+                </div>
             </div>
             <br />
-
-    
-    </div>
-}
+        </div>
+    }
 </div> 

@@ -1,4 +1,6 @@
 ﻿using employee_management.models;
+//using Employee_Management.AlertServices;
+//using Employee_Management.Enums;
 using Employee_Management.Models;
 using Employee_Management.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -95,12 +98,16 @@ namespace Employee_Management.Controllers {
                 {
                     if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
                     {
+
+                        //ViewBag.Alert = (Alerts.Success, "Login Successful");
                         return Redirect(ReturnUrl);
                     } else
                     {
-                    return RedirectToAction("index", "home");
+                        //ViewBag.Alert = (Alerts.Danger, "Unknown error");
+                        return RedirectToAction("index", "home");
 
                     }
+                    
                 } else { 
                
                     ModelState.AddModelError(string.Empty, "Invalid Login Credentials");
