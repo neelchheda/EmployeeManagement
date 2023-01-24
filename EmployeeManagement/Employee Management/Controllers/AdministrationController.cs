@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Xsl;
@@ -38,8 +39,20 @@ namespace Employee_Management.Controllers {
                 ViewBag.ErrorMessage = $"User with id {id} caanot be found";
                 return View("NotFound");
             }
-            
-            
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Roles=userRoles,
+                Claims=userClaims.Select(c=>c.Value).ToList()
+
+            };
+
+            return View(model);
         }
 
 
